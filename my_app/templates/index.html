@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Index Page | BinBuy</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap & jQuery -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #141E30, #243B55);
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            padding: 15px 0;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .navbar-brand {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            color: #FFD700 !important;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .navbar-brand:hover {
+            color: #ffffff !important;
+        }
+
+        .nav-link {
+            font-size: 18px;
+            margin-right: 20px;
+            transition: all 0.3s ease-in-out;
+            color: #FFD700 !important;
+        }
+
+        .nav-link:hover {
+            color: #ffffff !important;
+            transform: scale(1.1);
+        }
+
+        .badge {
+            font-size: 14px;
+            padding: 5px 8px;
+            border-radius: 10px;
+            background-color: #FFD700 !important;
+            color: #141E30 !important;
+        }
+
+        .tagline-container {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        .tagline {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: #FFD700;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .tagline span {
+            color: #ffffff;
+        }
+
+        .tagline strong {
+            color: #f39c12;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .hero-section img {
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .hero-section img:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">BinBuy</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon" style="filter: invert(100%);"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'pro' %}">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signin' %}">Sign-in</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}">Sign-up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'view_cart' %}">
+                            🛒 Cart <span class="badge">{{ request.session.cart|length }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}
+    <div class="tagline-container">
+        <h2 class="tagline">Bin It. <span>Buy It.</span> <strong>Love It.</strong></h2>
+    </div>
+
+    <div class="hero-section">
+        <center>
+            <img src="{% static 'e-comm.jpg' %}" alt="E-com" height="600" width="900">
+        </center>
+    </div>
+    {% endblock %}
+
+</body>
+</html>
+

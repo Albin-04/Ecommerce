@@ -1,0 +1,204 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+        color: #fff;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    .product-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .product-header h1 {
+        font-weight: 700;
+        color: #FFD700;
+    }
+
+    .header-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .product-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+        justify-content: center;
+    }
+
+    .product-card {
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(12px);
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        width: 280px;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .product-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .product-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 15px;
+    }
+
+    .product-name {
+        font-size: 20px;
+        font-weight: 600;
+        color: #ffffff;
+    }
+
+    .product-price {
+        color: #FFD700;
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .product-card p {
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    .product-buttons {
+        margin-top: 15px;
+    }
+
+    .btn {
+        border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+        font-weight: 500;
+    }
+
+    .btn-success {
+        background-color: #27ae60;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background-color: #219150;
+    }
+
+    .btn-primary {
+        background-color: #2980b9;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #216a99;
+    }
+
+    .btn-dark {
+        background-color: #1f1f1f;
+        color: white;
+        padding: 10px 16px;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 8px;
+    }
+
+    .btn-dark:hover {
+        background-color: #333;
+    }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        color: white;
+        padding: 10px 16px;
+        font-size: 15px;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+    }
+
+    .btn-danger:hover {
+        background-color: #c0392b;
+    }
+
+    .review-modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+        padding-top: 60px;
+    }
+
+    .review-modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        border-radius: 12px;
+    }
+
+    .close-btn {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close-btn:hover,
+    .close-btn:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+<div class="container">
+    <div class="product-header">
+        <h1>🛍️ BinBuy Products</h1>
+        <div class="header-buttons">
+            <a href="{% url 'add' %}" class="btn btn-dark">➕ Add Product</a>
+            <form method="post" action="{% url 'clear_cache' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">🧹 Clear Cache</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="product-grid">
+        {% for i in prdt %}
+        <div class="product-card">
+            <img src="{{ i.image.url }}" alt="{{ i.name }}">
+            <div class="product-name">{{ i.name }}</div>
+            <div class="product-price">₹{{ i.price }}</div>
+            <p>{{ i.details }}</p>
+            <div class="product-buttons">
+                <a href="{% url 'add_to_cart' i.id %}" class="btn btn-success btn-sm">🛒 Add to Cart</a>
+                <a href="{% url 'submit_review' i.id %}" class="btn btn-warning btn-sm" style="margin-top:8px;">⭐ Add Review</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
